@@ -1,6 +1,6 @@
 ---
 language: uz
-license: mit
+license: apache-2.0
 library_name: tokenizers
 tags:
   - tokenizer
@@ -10,6 +10,15 @@ tags:
 ---
 
 # Uzbek Tokenizer (`uztok`)
+
+> **This is the early development repository of the tokenizer.** The released tokenizer
+> is [IslombekT/uzbek-bpe-16k](https://huggingface.co/IslombekT/uzbek-bpe-16k) on Hugging Face
+> (the same `tokenizer.json` as here), and the model, paper and evaluation are in
+> [uzbek-gpt-from-scratch](https://github.com/TurdiyevIslombek/uzbek-gpt-from-scratch).
+> The numbers below are an early measurement on a different sample. The final measurement,
+> on the 474 held-out test documents in their original web spelling, is **1.749 tokens per
+> word** for this tokenizer against 2.578 for GPT-4o's `o200k_base` (Table 1 of the paper).
+> The final model built on it has 103M parameters, not the 30–60M planned below.
 
 A **byte-level BPE tokenizer for Uzbek**, built from scratch (no tokenizer
 libraries), with GPT-2-style regex pre-tokenization and Uzbek-aware apostrophe
@@ -88,13 +97,13 @@ Fertility = mean tokens per whitespace-delimited word on the held-out split
 | Tokenizer | Vocab | Fertility (tokens/word) on held-out Uzbek |
 |---|---|---|
 | This tokenizer | 16,384 | **1.850** |
-| GPT-4 `o200k_base` | ~200,000 | 2.620 |
+| GPT-4o `o200k_base` | ~200,000 | 2.620 |
 
 Measured on a 615,028-word held-out split (10% of a 50 MB FineWeb-2 `uzn_Latn`
 sample, never seen in training). **The monolingual 16k tokenizer is 1.42× more
-token-efficient on Uzbek than GPT-4's ~200k multilingual tokenizer** — a win
+token-efficient on Uzbek than GPT-4o's ~200k multilingual tokenizer** — a win
 achieved *despite* a roughly 12× smaller vocabulary, isolating the benefit of
-language-specific tokenization (vocabulary size, if anything, favors GPT-4).
+language-specific tokenization (vocabulary size, if anything, favors GPT-4o).
 
 ## Provenance
 
@@ -118,3 +127,7 @@ language-specific tokenization (vocabulary size, if anything, favors GPT-4).
 - Normalization is intentionally lossy (see design decision 3).
 - `decode(encode(x))` returns the **normalized** form of `x`, not necessarily the
   raw bytes of `x`.
+
+## License
+
+Apache-2.0 (see `LICENSE`), the same as the released tokenizer on Hugging Face.
